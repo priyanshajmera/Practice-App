@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PracticeApi.Data;
 using PracticeApi.Entities;
 
 namespace PracticeApi.Controllers
 {
-    [ApiController]
-    [Route("Api/[controller]")]
-    public class UsersController:ControllerBase
+    [Authorize]
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
 
@@ -15,7 +15,7 @@ namespace PracticeApi.Controllers
         {
             this._context = context;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
